@@ -12,22 +12,24 @@ MongoClient.connect(
     if (error) return console.error('Unable to connect to database');
 
     const db = client.db(databaseName);
-    db.collection('users').findOne({ _id: new ObjectID('') }, (error, user) => {
-      if (error) return console.error('Unable to fetch');
-
-      console.log(user);
-    });
-
     db.collection('users')
-      .find({ age: 25 })
-      .toArray((error, users) => {
-        console.log(users);
-      });
+      .updateOne(
+        {
+          _id: new ObjectID('603b5893e6aea91cd00721d7'),
+        },
+        {
+          $inc: { age: -1 },
+          // $set: { name: 'Hüseyin' },
+        },
+      )
+      .then((result) => {
+        console.log(result.result);
+      })
+      .catch(console.error);
 
-    db.collection('users')
-      .find({ name: 'Ali' })
-      .count((error, count) => {
-        console.log(count);
-      });
+    db.collection('tasks')
+      .updateMany({ completed: false }, { $set: { completed: true } })
+      .then((result) => console.log(result.result))
+      .catch(console.error);
   },
 );
