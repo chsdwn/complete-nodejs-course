@@ -13,22 +13,12 @@ MongoClient.connect(
 
     const db = client.db(databaseName);
     db.collection('users')
-      .updateOne(
-        {
-          _id: new ObjectID('603b5893e6aea91cd00721d7'),
-        },
-        {
-          $inc: { age: -1 },
-          // $set: { name: 'Hüseyin' },
-        },
-      )
-      .then((result) => {
-        console.log(result.result);
-      })
+      .deleteMany({ age: 27 })
+      .then((result) => console.log(result.result))
       .catch(console.error);
 
-    db.collection('tasks')
-      .updateMany({ completed: false }, { $set: { completed: true } })
+    db.collection('users')
+      .deleteOne({ age: 24 })
       .then((result) => console.log(result.result))
       .catch(console.error);
   },
