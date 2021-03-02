@@ -14,12 +14,20 @@ const User = mongoose.model('User', {
   },
 });
 
-const ali = new User({ name: 'Ali', age: 24 });
-ali
+const Task = mongoose.model('Task', {
+  description: {
+    type: String,
+  },
+  completed: {
+    type: Boolean,
+  },
+});
+
+const task = new Task({
+  description: 'Learn the Mongoose',
+  completed: false,
+});
+task
   .save()
-  .then(() => {
-    console.log(ali);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+  .then(() => console.log(task))
+  .catch(console.error);
