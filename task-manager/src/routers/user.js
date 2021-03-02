@@ -42,7 +42,16 @@ router.post('/users', async (req, res) => {
   }
 });
 
-const upload = multer({ dest: 'avatars' });
+const upload = multer({
+  dest: 'avatars',
+  limits: { fileSize: 1024 * 1024 * 1 },
+  fileFilter(req, file, callback) {
+    if (!file.originalname.match(/\.(jpg|jpeg)$/))
+      return callback(new Error('Please upload an image'));
+
+    callback(undefined, true);
+  },
+});
 router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
   res.send();
 });
