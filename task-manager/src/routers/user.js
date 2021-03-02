@@ -1,7 +1,13 @@
 const express = require('express');
+const auth = require('../middleware/auth');
 const router = new express.Router();
 
 const User = require('../models/user');
+
+router.get('/users/me', auth, async (req, res) => {
+  console.log('user', req.user);
+  res.send(req.user);
+});
 
 router.get('/users/:id', async (req, res) => {
   const _id = req.params.id;
@@ -15,7 +21,7 @@ router.get('/users/:id', async (req, res) => {
   }
 });
 
-router.get('/users', async (_, res) => {
+router.get('/users', auth, async (_, res) => {
   try {
     const users = await User.find({});
     res.send(users);
