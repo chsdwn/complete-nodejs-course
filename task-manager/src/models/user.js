@@ -65,7 +65,7 @@ userSchema.methods.toJSON = function () {
 
   delete userObject.password;
   delete userObject.tokens;
-  console.log(userObject);
+  delete userObject.avatar;
 
   return userObject;
 };
