@@ -46,15 +46,22 @@ const upload = multer({
   dest: 'avatars',
   limits: { fileSize: 1024 * 1024 * 1 },
   fileFilter(req, file, callback) {
-    if (!file.originalname.match(/\.(jpg|jpeg)$/))
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/))
       return callback(new Error('Please upload an image'));
 
     callback(undefined, true);
   },
 });
-router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
-  res.send();
-});
+router.post(
+  '/users/me/avatar',
+  upload.single('avatar'),
+  (req, res) => {
+    res.send();
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
+  },
+);
 
 router.patch('/users/me', auth, async (req, res) => {
   const bodyKeys = Object.keys(req.body);
