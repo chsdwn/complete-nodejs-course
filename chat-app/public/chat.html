@@ -19,6 +19,8 @@
             id="msgInput"
             type="text"
             placeholder="Enter your message..."
+            required
+            autocomplete="off"
           />
           <button id="sendBtn">Send</button>
         </div>
@@ -29,7 +31,7 @@
     <script id="message-template" type="text/html">
       <div class="message">
         <p>
-          <span class="message__name">(o_o)</span>
+          <span class="message__name">{{username}}</span>
           <span class="message__meta">{{createdAt}}</span>
         </p>
         <p>{{text}}</p>
@@ -39,7 +41,10 @@
     <script id="location-template" type="text/html">
       <div>
         <p>
-          {{createdAt}} -&nbsp;
+          <span class="message__name">{{username}}</span>
+          <span class="message__meta">{{createdAt}}</span>
+        </p>
+        <p>
           <a href="{{url}}" target="_blank">My Location</a>
         </p>
       </div>

@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
 
     socket.join(room);
 
-    socket.emit('message', generateMessage('Welcome!'));
+    socket.emit('message', generateMessage('Admin', 'Welcome!'));
     socket.broadcast
       .to(user.room)
       .emit('message', generateMessage(`${user.username} has joined`));
@@ -41,10 +41,12 @@ io.on('connection', (socket) => {
   });
 
   socket.on('sendLocation', ({ ltd, lng }, callback) => {
-    // io.emit('message', `Location: https://google.com/maps?q=${ltd},${lng}`);
-    io.emit(
+    const { username, room } = getUser(socket.id);
+
+    io.to(room).emit(
       'locationMessage',
       generateLocationMessage(
+        username,
         `https://www.openstreetmap.org/#map=17/${ltd}/${lng}`,
       ),
     );
@@ -52,7 +54,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('sendMessage', (msg, callback) => {
-    io.to('test').emit('message', generateMessage(msg));
+    const { username, room } = getUser(socket.id);
+
+    io.to(room).emit('message', generateMessage(username, msg));
     callback('Delivered');
   });
 
