@@ -4,5 +4,5 @@ const joinBtn = document.getElementById('joinBtn');
 
 joinBtn.addEventListener('click', () => {
   const url = `/chat.html?username=${usernameInput.value}&room=${roomInput.value}`;
-  window.location.href = url;
+  location.href = url;
 });

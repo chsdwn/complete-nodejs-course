@@ -27,7 +27,12 @@ socket.on('locationMessage', ({ url, createdAt }) => {
   messages.insertAdjacentHTML('beforeend', html);
 });
 
-socket.emit('join', { username, room });
+socket.emit('join', { username, room }, (error) => {
+  if (error) {
+    alert(error);
+    location.href = '/';
+  }
+});
 
 sendBtn.addEventListener('click', () => {
   sendBtn.setAttribute('disabled', 'disabled');
