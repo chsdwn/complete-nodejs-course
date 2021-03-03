@@ -1,4 +1,5 @@
 const socket = io();
+
 const messages = document.getElementById('messages');
 const sendBtn = document.getElementById('sendBtn');
 const shareLocationBtn = document.getElementById('shareLocationBtn');
@@ -6,9 +7,12 @@ const msgInput = document.getElementById('msgInput');
 const locationTemplate = document.getElementById('location-template').innerHTML;
 const messageTemplate = document.getElementById('message-template').innerHTML;
 
-socket.on('message', (message) => {
-  console.log('Message: ', message);
-  const html = Mustache.render(messageTemplate, { message });
+socket.on('message', ({ text, createdAt }) => {
+  console.log('Message: ', text);
+  const html = Mustache.render(messageTemplate, {
+    message: text,
+    createdAt: moment(createdAt).format('HH:mm'),
+  });
   messages.insertAdjacentHTML('beforeend', html);
 });
 socket.on('locationMessage', (url) => {
