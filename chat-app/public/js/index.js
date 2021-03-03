@@ -1,5 +1,8 @@
+const usernameInput = document.getElementById('usernameInput');
+const roomInput = document.getElementById('roomInput');
 const joinBtn = document.getElementById('joinBtn');
 
 joinBtn.addEventListener('click', () => {
-  window.location.href = '/chat.html';
+  const url = `/chat.html?username=${usernameInput.value}&room=${roomInput.value}`;
+  window.location.href = url;
 });

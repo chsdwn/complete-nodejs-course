@@ -7,6 +7,10 @@ const msgInput = document.getElementById('msgInput');
 const locationTemplate = document.getElementById('location-template').innerHTML;
 const messageTemplate = document.getElementById('message-template').innerHTML;
 
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
+
 socket.on('message', ({ text, createdAt }) => {
   const html = Mustache.render(messageTemplate, {
     text,
@@ -22,6 +26,8 @@ socket.on('locationMessage', ({ url, createdAt }) => {
   });
   messages.insertAdjacentHTML('beforeend', html);
 });
+
+socket.emit('join', { username, room });
 
 sendBtn.addEventListener('click', () => {
   sendBtn.setAttribute('disabled', 'disabled');
