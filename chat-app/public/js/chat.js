@@ -1,9 +1,15 @@
 const socket = io();
+const messages = document.getElementById('messages');
 const sendBtn = document.getElementById('sendBtn');
 const shareLocationBtn = document.getElementById('shareLocationBtn');
 const msgInput = document.getElementById('msgInput');
+const messageTemplate = document.getElementById('message-template').innerHTML;
 
-socket.on('message', (msg) => console.log(msg));
+socket.on('message', (message) => {
+  console.log('Message: ', message);
+  const html = Mustache.render(messageTemplate, { message });
+  messages.insertAdjacentHTML('beforeend', html);
+});
 socket.on('sendMessage', (msg) => console.log(msg));
 
 sendBtn.addEventListener('click', () => {

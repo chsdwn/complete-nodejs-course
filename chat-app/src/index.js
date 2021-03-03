@@ -20,15 +20,12 @@ io.on('connection', (socket) => {
 
   socket.on('sendLocation', ({ ltd, lng }, callback) => {
     // io.emit('message', `Location: https://google.com/maps?q=${ltd},${lng}`);
-    io.emit(
-      'message',
-      `Location: https://www.openstreetmap.org/#map=17/${ltd}/${lng}`,
-    );
+    io.emit('message', `https://www.openstreetmap.org/#map=17/${ltd}/${lng}`);
     callback('Location shared');
   });
 
   socket.on('sendMessage', (msg, callback) => {
-    io.emit('sendMessage', msg);
+    io.emit('message', msg);
     callback('Delivered');
   });
 

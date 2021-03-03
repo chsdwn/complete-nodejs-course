@@ -9,6 +9,8 @@
   <body>
     <h1>Chat App</h1>
 
+    <div id="messages"></div>
+
     <div>
       <input id="msgInput" type="text" placeholder="Enter your message..." />
       <button id="sendBtn">Send</button>
@@ -16,6 +18,27 @@
 
     <button id="shareLocationBtn">Share Location</button>
 
+    <script id="message-template" type="text/html">
+      <div>
+        <p>{{message}}</p>
+      </div>
+    </script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.1.0/mustache.min.js"
+      integrity="sha512-HYiNpwSxYuji84SQbCU5m9kHEsRqwWypXgJMBtbRSumlx1iBB6QaxgEBZHSHEGM+fKyCX/3Kb5V5jeVXm0OglQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.6/qs.min.js"
+      integrity="sha512-3TmPrquYLaAsUmZKXRARTDC5siWhLAdBVqNo4dWpDABBtLU62AaoTaQJEvjxjExcZYurO6i1dnK85k8pPIBlRg=="
+      crossorigin="anonymous"
+    ></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/chat.js"></script>
   </body>
