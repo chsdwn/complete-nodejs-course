@@ -8,16 +8,18 @@ const locationTemplate = document.getElementById('location-template').innerHTML;
 const messageTemplate = document.getElementById('message-template').innerHTML;
 
 socket.on('message', ({ text, createdAt }) => {
-  console.log('Message: ', text);
   const html = Mustache.render(messageTemplate, {
-    message: text,
+    text,
     createdAt: moment(createdAt).format('HH:mm'),
   });
   messages.insertAdjacentHTML('beforeend', html);
 });
-socket.on('locationMessage', (url) => {
-  console.log(url);
-  const html = Mustache.render(locationTemplate, { url });
+
+socket.on('locationMessage', ({ url, createdAt }) => {
+  const html = Mustache.render(locationTemplate, {
+    url,
+    createdAt: moment(createdAt).format('HH:mm'),
+  });
   messages.insertAdjacentHTML('beforeend', html);
 });
 
@@ -43,7 +45,6 @@ shareLocationBtn.addEventListener('click', () => {
     const { latitude, longitude } = position.coords;
     socket.emit('sendLocation', { ltd: latitude, lng: longitude }, (msg) => {
       shareLocationBtn.removeAttribute('disabled');
-
       console.log(msg);
     });
   });

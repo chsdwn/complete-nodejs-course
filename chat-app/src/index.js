@@ -2,7 +2,10 @@ const http = require('http');
 const path = require('path');
 const express = require('express');
 const socketio = require('socket.io');
-const { generateMessage } = require('../src/utils/messages');
+const {
+  generateMessage,
+  generateLocationMessage,
+} = require('../src/utils/messages');
 
 const app = express();
 const server = http.createServer(app);
@@ -23,7 +26,9 @@ io.on('connection', (socket) => {
     // io.emit('message', `Location: https://google.com/maps?q=${ltd},${lng}`);
     io.emit(
       'locationMessage',
-      `https://www.openstreetmap.org/#map=17/${ltd}/${lng}`,
+      generateLocationMessage(
+        `https://www.openstreetmap.org/#map=17/${ltd}/${lng}`,
+      ),
     );
     callback('Location shared');
   });
