@@ -1,11 +1,13 @@
 const socket = io();
 
 const messages = document.getElementById('messages');
+const sidebar = document.getElementById('sidebar');
 const sendBtn = document.getElementById('sendBtn');
 const shareLocationBtn = document.getElementById('shareLocationBtn');
 const msgInput = document.getElementById('msgInput');
 const locationTemplate = document.getElementById('location-template').innerHTML;
 const messageTemplate = document.getElementById('message-template').innerHTML;
+const sidebarTemplate = document.getElementById('sidebar-template').innerHTML;
 
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
@@ -27,6 +29,14 @@ socket.on('locationMessage', ({ username, url, createdAt }) => {
     createdAt: moment(createdAt).format('HH:mm'),
   });
   messages.insertAdjacentHTML('beforeend', html);
+});
+
+socket.on('roomData', ({ room, users }) => {
+  const html = Mustache.render(sidebarTemplate, {
+    room,
+    users,
+  });
+  sidebar.innerHTML = html;
 });
 
 socket.emit('join', { username, room }, (error) => {
