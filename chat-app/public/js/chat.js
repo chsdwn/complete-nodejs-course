@@ -3,6 +3,7 @@ const messages = document.getElementById('messages');
 const sendBtn = document.getElementById('sendBtn');
 const shareLocationBtn = document.getElementById('shareLocationBtn');
 const msgInput = document.getElementById('msgInput');
+const locationTemplate = document.getElementById('location-template').innerHTML;
 const messageTemplate = document.getElementById('message-template').innerHTML;
 
 socket.on('message', (message) => {
@@ -10,7 +11,11 @@ socket.on('message', (message) => {
   const html = Mustache.render(messageTemplate, { message });
   messages.insertAdjacentHTML('beforeend', html);
 });
-socket.on('sendMessage', (msg) => console.log(msg));
+socket.on('locationMessage', (url) => {
+  console.log(url);
+  const html = Mustache.render(locationTemplate, { url });
+  messages.insertAdjacentHTML('beforeend', html);
+});
 
 sendBtn.addEventListener('click', () => {
   sendBtn.setAttribute('disabled', 'disabled');
